@@ -1,0 +1,58 @@
+This is m4bf, that is Macro Brainfuck!
+
+This is a temporary README file just to provide some instruction.
+
+See INSTALL for instruction on how to install this weird creature.
+You should be ok with a simple `./configure && make install` anyway.
+
+Once installed you can invoke it with
+
+$ bfi <filename>
+
+Where filename is a m4bf file.
+
+With this you get almost all the feature of classical Brainfuck,
+except the fact that stuff written to the end of the file will NOT be
+placed into Brainfuck's memory, so no string preloading for now,
+sorry!
+
+But in exchange you get: - A user stack - A macro facility to simulate
+function calls
+
+So some new instruction are provided, here they are:
+
+^ Pushes the value of the current memory cell onto the stack V Pops
+the top of the stack into the current memory cell P Copies the top of
+the stack into the current memory cell A Pushes the current memory
+address onto the stack U Moves the memory pointer to the address
+stored on top of the stack (and pops it off)
+
+Instruction names are not case sensitive so `U` is really the same as
+`u`
+
+About macros, at the moment m4bf uses the GNU C Preprocessor to handle
+macros, so you define a macro like this
+
+#define MACRO_NAME instructions
+
+for example, to make a macro that prints the string stored at the
+address on top of the stack you would do
+
+#define print U[.>]
+
+Remember to escape newlines, for example
+
+#define print U\
+[.>\
+]
+
+Of course, cpp limits what you can do with macros. For example it will
+complain and abort execution if he finds unmatched quotes or
+parentheses (so be careful with cycles).
+
+Also remember these are not functions, but macros. It would be a bad
+idea to use recursion on these...
+
+Check for some really bad examples in src/examples directory.
+
+Have fun!

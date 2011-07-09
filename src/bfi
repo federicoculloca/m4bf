@@ -1,0 +1,7 @@
+#!/bin/sh
+
+tmp=`tempfile`
+tmp2=`tempfile`
+cpp $1 -o $tmp
+grep '^[^#]' $tmp > $tmp2 
+bf $tmp2
